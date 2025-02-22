@@ -13,6 +13,7 @@ import com.example.battletanks.enums.Direction
 import com.example.battletanks.enums.Material
 import com.example.battletanks.models.Coordinate
 import com.example.battletanks.models.Element
+import com.example.battletanks.utils.getElementByCoordinates
 
 class ElementsDrawer (val container: FrameLayout) {
     var currentMaterial = Material.EMPTY
@@ -31,7 +32,7 @@ class ElementsDrawer (val container: FrameLayout) {
 
 
     private fun drawOrReplaceView(coordinate: Coordinate) {
-        val viewOnCoordinate = getElementByCoordinates(coordinate)
+        val viewOnCoordinate = getElementByCoordinates(coordinate,elementsOnContainer)
         if (viewOnCoordinate == null) {
             drawView(coordinate)
             return
@@ -47,7 +48,7 @@ class ElementsDrawer (val container: FrameLayout) {
     }
 
     private fun eraseView(coordinate: Coordinate) {
-        val elementOnCoordinate = getElementByCoordinates(coordinate)
+        val elementOnCoordinate = getElementByCoordinates(coordinate, elementsOnContainer)
         if (elementOnCoordinate != null) {
             val erasingView = container.findViewById<View>(elementOnCoordinate.viewId)
             container.removeView(erasingView)
@@ -77,7 +78,4 @@ class ElementsDrawer (val container: FrameLayout) {
         elementsOnContainer.add(Element(viewId, currentMaterial, coordinate))
     }
 
-
-    private fun getElementByCoordinates(coordinate: Coordinate) =
-        elementsOnContainer.firstOrNull { it.coordinate == coordinate }
 }

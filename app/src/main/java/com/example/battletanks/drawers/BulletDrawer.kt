@@ -11,29 +11,57 @@ import com.example.battletanks.models.Coordinate
 import com.example.battletanks.utils.checkViewCanMoveThrounghBorder
 
 private const val BULLET_WIDTH=15
-private const val BULLET_HEIGHT=15
+private const val BULLET_HEIGHT=25
 
 class BulletDrawer(val container: FrameLayout) {
+    private var canBulletGoFurther = true
+    private var bulletThread: Thread? = null
+
+    private fun checkBulletThreadlive() = bulletThread != null && bulletThread!!.isAlive
     fun makeBulletMove(myTank: View, currentDirection: Direction){
-        Thread(Runnable {
-            val bullet = createBullet(myTank, currentDirection)
-            while (bullet.checkViewCanMoveThrounghBorder(Coordinate(bullet.top, bullet.left))){
-                when (currentDirection) {
-                    Direction.UP -> (bullet.layoutParams as FrameLayout.LayoutParams).topMargin -= BULLET_HEIGHT
-                    Direction.DOWN -> (bullet.layoutParams as FrameLayout.LayoutParams).topMargin += BULLET_HEIGHT
-                    Direction.LEFT -> (bullet.layoutParams as FrameLayout.LayoutParams).leftMargin -= BULLET_HEIGHT
-                    Direction.RIGHT -> (bullet.layoutParams as FrameLayout.LayoutParams).leftMargin += BULLET_HEIGHT
+        canBulletGoFurther = true
+        if (!checkBulletThreadlive()) {
+            bulletThread = Thread(Runnable {
+                val bullet = createBullet(myTank, currentDirection)
+                while (bullet.checkViewCanMoveThrounghBorder(Coordinate(bullet.top, bullet.left))){
+                    when (currentDirection) {
+                        Direction.UP -> (bullet.layoutParams as FrameLayout.LayoutParams).topMargin -= BULLET_HEIGHT
+                        Direction.DOWN -> (bullet.layoutParams as FrameLayout.LayoutParams).topMargin += BULLET_HEIGHT
+                        Direction.LEFT -> (bullet.layoutParams as FrameLayout.LayoutParams).leftMargin -= BULLET_HEIGHT
+                        Direction.RIGHT -> (bullet.layoutParams as FrameLayout.LayoutParams).leftMargin += BULLET_HEIGHT
+                    }
+                    Thread.sleep(30)
+                    (container.context as Activity).runOnUiThread{
+                        container.removeView(bullet)
+                        container.addView(bullet)
+                    }
                 }
-                Thread.sleep(30)
-                (container.context as Activity).runOnUiThread{
+                (container.context as Activity).runOnUiThread {
                     container.removeView(bullet)
-                    container.addView(bullet)
                 }
-            }
-            (container.context as Activity).runOnUiThread{
-                container.removeView(bullet)
-            }
-        }).start()
+                })
+            bulletThread!!.start()
+        }
+    }
+
+    private fun getCoordinateForTopOrBottomDirection(bulletCoordinate: Coordinate):List<Coordinate>{
+        val leftCell = bulletCoordinate.left - bulletCoordinate.left% CEll_SIZE
+        val rightCell = leftCell + CEll_SIZE
+        val topCoordinate = bulletCoordinate.top - bulletCoordinate.top% CEll_SIZE
+        return listOf(
+            Coordinate(topCoordinate, leftCell),
+            Coordinate(topCoordinate, rightCell)
+        )
+    }
+
+    private fun getCoordinatesForLeftOrRightDirection (bulletCoordinate: Coordinate): List<Coordinate>{
+        val topCell = bulletCoordinate.top - bulletCoordinate.top% CEll_SIZE
+        val bottomCell = topCell + CEll_SIZE
+        val leftCoordinate = bulletCoordinate.left - bulletCoordinate.left% CEll_SIZE
+        return listOf(
+            Coordinate(topCell, leftCoordinate),
+            Coordinate(bottomCell,leftCoordinate)
+        )
     }
 
     private fun createBullet(myTank: View, currentDirection: Direction): ImageView {
