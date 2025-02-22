@@ -7,9 +7,6 @@ import android.view.KeyEvent.*
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.*
-import android.widget.FrameLayout
-import androidx.core.view.marginLeft
-import androidx.core.view.marginTop
 import com.example.battletanks.enums.Direction.UP
 import com.example.battletanks.enums.Direction.DOWN
 import com.example.battletanks.enums.Direction.LEFT
@@ -19,9 +16,7 @@ import com.example.battletanks.drawers.BulletDrawer
 import com.example.battletanks.drawers.ElementsDrawer
 import com.example.battletanks.drawers.GridDrawer
 import com.example.battletanks.drawers.TankDrawer
-import com.example.battletanks.enums.Direction
 import com.example.battletanks.enums.Material
-import com.example.battletanks.models.Coordinate
 
 lateinit var binding: ActivityMainBinding
 
@@ -98,13 +93,11 @@ when (keyCode) {
     KEYCODE_DPAD_DOWN-> tankDrawer.move(binding.myTank, DOWN, elementsDrawer.elementsOnContainer)
     KEYCODE_DPAD_LEFT -> tankDrawer.move(binding.myTank, LEFT, elementsDrawer.elementsOnContainer)
     KEYCODE_DPAD_RIGHT -> tankDrawer.move(binding.myTank, RIGHT, elementsDrawer.elementsOnContainer)
-    KEYCODE_SPACE -> buttleDrawer.drawBullet(
+    KEYCODE_SPACE -> buttleDrawer.makeBulletMove(
         binding.myTank,
-    tankDrawer.currentDirection)
+        tankDrawer.currentDirection)
 }
         return super.onKeyDown(keyCode, event)
     }
-
-
 }
 

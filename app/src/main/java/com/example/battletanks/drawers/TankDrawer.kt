@@ -7,6 +7,7 @@ import com.example.battletanks.binding
 import com.example.battletanks.enums.Direction
 import com.example.battletanks.models.Coordinate
 import com.example.battletanks.models.Element
+import com.example.battletanks.utils.checkViewCanMoveThrounghBorder
 
 class TankDrawer(val container: FrameLayout) {
     var currentDirection=Direction.UP
@@ -31,9 +32,8 @@ class TankDrawer(val container: FrameLayout) {
         }
 
         val nextCoordinate = Coordinate(layoutParams.topMargin,layoutParams.leftMargin)
-        if (checkTankCanMoveThrounghBorder(
-                nextCoordinate,
-                myTank
+        if (myTank.checkViewCanMoveThrounghBorder(
+                nextCoordinate
             ) && checkTankCanMoveThrounghMaterial(nextCoordinate, elementsOnContainer)
         ){
             binding.container.removeView(myTank)
@@ -57,12 +57,12 @@ class TankDrawer(val container: FrameLayout) {
         return true
     }
 
-    private fun checkTankCanMoveThrounghBorder(coordinate: Coordinate, myTank: View): Boolean {
-        return coordinate.top >= 0 &&
-                coordinate.top+ myTank.height <= binding.container.height &&
-                coordinate.left >= 0 &&
-                coordinate.left+ myTank.width <= binding.container.width
-    }
+   // private fun checkTankCanMoveThrounghBorder(coordinate: Coordinate, myTank: View): Boolean {
+  //      return coordinate.top >= 0 &&
+           //     coordinate.top+ myTank.height <= binding.container.height &&
+         //       coordinate.left >= 0 &&
+           //     coordinate.left+ myTank.width <= binding.container.width
+  //  }
 
     private fun getTankCoordinates(topLeftCoordinate: Coordinate): List<Coordinate> {
         val coordinateList = mutableListOf<Coordinate>()
