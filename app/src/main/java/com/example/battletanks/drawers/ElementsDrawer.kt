@@ -14,9 +14,9 @@ import com.example.battletanks.enums.Material
 import com.example.battletanks.models.Coordinate
 import com.example.battletanks.models.Element
 
-class ElementsDrawer (val container: FrameLayout){
-    var currentMaterial= Material.EMPTY
-    val elementsOnContainer= mutableListOf<Element>()
+class ElementsDrawer (val container: FrameLayout) {
+    var currentMaterial = Material.EMPTY
+    val elementsOnContainer = mutableListOf<Element>()
 
     fun onTouchContainer(x: Float, y: Float) {
         val topMargin = y.toInt() - (y.toInt() % CEll_SIZE)
@@ -41,12 +41,12 @@ class ElementsDrawer (val container: FrameLayout){
         }
     }
 
-    private fun replaceView(coordinate: Coordinate){
+    private fun replaceView(coordinate: Coordinate) {
         eraseView(coordinate)
         drawView(coordinate)
     }
 
-    private fun eraseView(coordinate: Coordinate){
+    private fun eraseView(coordinate: Coordinate) {
         val elementOnCoordinate = getElementByCoordinates(coordinate)
         if (elementOnCoordinate != null) {
             val erasingView = container.findViewById<View>(elementOnCoordinate.viewId)
@@ -57,9 +57,9 @@ class ElementsDrawer (val container: FrameLayout){
 
 
     fun drawView(coordinate: Coordinate) {
-        val view=ImageView(container.context)
-        val layoutParams=FrameLayout.LayoutParams(CEll_SIZE, CEll_SIZE)
-        when (currentMaterial){
+        val view = ImageView(container.context)
+        val layoutParams = FrameLayout.LayoutParams(CEll_SIZE, CEll_SIZE)
+        when (currentMaterial) {
             Material.EMPTY -> {
 
             }
@@ -68,15 +68,16 @@ class ElementsDrawer (val container: FrameLayout){
             Material.CONCRETE -> view.setImageResource(R.drawable.concrete)
             Material.GRASS -> view.setImageResource(R.drawable.grass)
         }
-        layoutParams.topMargin=coordinate.top
-        layoutParams.leftMargin=coordinate.left
-        val viewId=View.generateViewId()
-        view.id=viewId
-        view.layoutParams=layoutParams
+        layoutParams.topMargin = coordinate.top
+        layoutParams.leftMargin = coordinate.left
+        val viewId = View.generateViewId()
+        view.id = viewId
+        view.layoutParams = layoutParams
         container.addView(view)
-        elementsOnContainer.add(Element(viewId,currentMaterial,coordinate))
+        elementsOnContainer.add(Element(viewId, currentMaterial, coordinate))
     }
 
 
-    private fun getElementByCoordinates (coordinate: Coordinate)=
-        elementsOnContainer.firstOrNull {it.coordinate == coordinate}
+    private fun getElementByCoordinates(coordinate: Coordinate) =
+        elementsOnContainer.firstOrNull { it.coordinate == coordinate }
+}

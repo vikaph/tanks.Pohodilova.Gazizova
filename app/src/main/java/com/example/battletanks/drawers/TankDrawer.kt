@@ -6,6 +6,7 @@ import com.example.battletanks.CEll_SIZE
 import com.example.battletanks.binding
 import com.example.battletanks.enums.Direction
 import com.example.battletanks.models.Coordinate
+import com.example.battletanks.models.Element
 
 class TankDrawer(val container: FrameLayout) {
     var currentDirection=Direction.UP
@@ -13,21 +14,18 @@ class TankDrawer(val container: FrameLayout) {
         val layoutParams = myTank.layoutParams as FrameLayout.LayoutParams
         val currentCoordinate = Coordinate(layoutParams.topMargin, layoutParams.leftMargin)
         currentDirection=direction
+        myTank.rotation=direction.rotation
         when(direction) {
             Direction.UP -> {
-                myTank.rotation = 0f
                 (myTank.layoutParams as FrameLayout.LayoutParams).topMargin += -CEll_SIZE
             }
             Direction.DOWN -> {
-                myTank.rotation = 180f
                 (myTank.layoutParams as FrameLayout.LayoutParams).topMargin += CEll_SIZE
             }
             Direction.LEFT -> {
-                myTank.rotation = 270f
                 (myTank.layoutParams as FrameLayout.LayoutParams).leftMargin -= CEll_SIZE
             }
             Direction.RIGHT -> {
-                myTank.rotation = 90f
                 (myTank.layoutParams as FrameLayout.LayoutParams).leftMargin += CEll_SIZE
             }
         }

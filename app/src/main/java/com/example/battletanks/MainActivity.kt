@@ -98,10 +98,9 @@ when (keyCode) {
     KEYCODE_DPAD_DOWN-> tankDrawer.move(binding.myTank, DOWN, elementsDrawer.elementsOnContainer)
     KEYCODE_DPAD_LEFT -> tankDrawer.move(binding.myTank, LEFT, elementsDrawer.elementsOnContainer)
     KEYCODE_DPAD_RIGHT -> tankDrawer.move(binding.myTank, RIGHT, elementsDrawer.elementsOnContainer)
-    KEYCODE_SPACE -> BulletDrawer.drawBullet(
+    KEYCODE_SPACE -> buttleDrawer.drawBullet(
         binding.myTank,
-        tankDrawer.currentDirection
-    )
+    tankDrawer.currentDirection)
 }
         return super.onKeyDown(keyCode, event)
     }
