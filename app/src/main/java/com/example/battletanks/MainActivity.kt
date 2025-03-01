@@ -36,8 +36,12 @@ class MainActivity : AppCompatActivity() {
         TankDrawer(binding.container)
     }
 
-    private val buttleDrawer by lazy {
+    private val bulletDrawer by lazy {
         BulletDrawer(binding.container)
+    }
+
+    private val levelStorage by lazy {
+        LevelStorage(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             elementsDrawer.onTouchContainer(event.x, event.y)
             return@setOnTouchListener true
         }
+        levelStorage.loadLevel()
     }
 
     private fun switchEditMode(){
@@ -82,8 +87,11 @@ class MainActivity : AppCompatActivity() {
                 switchEditMode()
                 gridDrawer.drawGrid()
                 return true
-
         }
+            R.id.menu_save -> {
+                levelStorage.saveLevel(elementsDrawer.elementsOnContainer)
+                return true
+            }
         else -> super.onOptionsItemSelected(item)
     }
     }
