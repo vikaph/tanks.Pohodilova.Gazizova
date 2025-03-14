@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             elementsDrawer.onTouchContainer(event.x, event.y)
             return@setOnTouchListener true
         }
-        levelStorage.loadLevel()
+        elementsDrawer.drawElementsList(levelStorage.loadLevel())
     }
 
     private fun switchEditMode(){

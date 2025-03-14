@@ -1,16 +1,11 @@
 package com.example.battletanks.drawers
 
-import android.app.ActionBar.LayoutParams
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-import androidx.core.view.marginLeft
-import androidx.core.view.marginTop
 import com.example.battletanks.CEll_SIZE
 import com.example.battletanks.R
-import com.example.battletanks.binding
-import com.example.battletanks.enums.Direction
 import com.example.battletanks.enums.Material
 import com.example.battletanks.models.Coordinate
 import com.example.battletanks.models.Element
@@ -44,6 +39,16 @@ class ElementsDrawer (val container: FrameLayout) {
         }
         if (viewOnCoordinate.material != currentMaterial) {
             replaceView(coordinate)
+        }
+    }
+
+    fun drawElementsList(elements: Unit) {
+        if (elements ==null){
+            return
+        }
+        for (element in elements) {
+            currentMaterial=element.material
+            selectMaterial((element.coordinate))
         }
     }
 

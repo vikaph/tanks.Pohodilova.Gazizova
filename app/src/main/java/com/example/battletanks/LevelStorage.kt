@@ -16,12 +16,12 @@ prefs.edit()
     .putString(KEY_LEVEL, Gson().toJson(elementsOnContainer))
     .apply()
     }
-    fun loadLevel(){
+    fun loadLevel():List<Element>? {
         val levelFromPrefs=prefs.getString(KEY_LEVEL,null)
         levelFromPrefs?.let {
             val type = object : TypeToken<List<Element>>() {}.type
             return Gson().fromJson(it,type)
         }
-
+return null
     }
 }
