@@ -74,6 +74,18 @@
             android:layout_height="@dimen/cell_size"
             android:layout_margin="8dp"
             android:src="@drawable/eagle"/>
+        <ImageView
+            android:layout_width="@dimen/cell_size"
+            android:layout_height="@dimen/cell_size"
+            android:id="@+id/edotor_enemy_respawn"
+            android:layout_margin="8dp"
+            android:src="@drawable/enemy_tank"/>
+        <ImageView
+            android:layout_width="@dimen/cell_size"
+            android:layout_height="@dimen/cell_size"
+            android:id="@+id/edotor_player_respawn"
+            android:layout_margin="8dp"
+            android:src="@drawable/tank"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
